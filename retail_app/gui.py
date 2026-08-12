@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+from datetime import datetime
 
 from .config import (
     KEY_ADDRESS,
@@ -91,11 +92,12 @@ def run() -> None:
             if event == KEY_OK:
                 # Compile form data
                 order_details = (
+                    f"Timestamp: {datetime.now()}\n"
                     f"Product: {values[KEY_ORDER]}\n"
                     f"Phone: {values[KEY_PHONE]}\n"
                     f"Address: {values[KEY_ADDRESS]}\n"
                     f"Payment Method: {values[KEY_PAYMENT]}\n"
-                    f"Notes: {values[KEY_NOTES].strip()}"
+                    f"Notes: {values[KEY_NOTES].strip()}\n"
                 )
 
                 status = save_order(values[KEY_NAME], order_details)

@@ -25,7 +25,7 @@ def build_window() -> sg.Window:
 
         # Prompt product selection
         [sg.Text("Select a Product:", font=("Helvetica", 10, "bold"))],
-        [sg.Combo(products, default_value=products[0], key=KEY_ORDER, readonly=True, size=(35, 1))],
+        [sg.Combo(product_options, default_value=product_options[0], key=KEY_ORDER, readonly=True, size=(35, 1))],
 
         # Ask for customer info
         *label_input("Full Name:", KEY_NAME),

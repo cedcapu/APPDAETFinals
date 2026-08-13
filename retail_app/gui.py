@@ -13,7 +13,6 @@ sg.theme("DarkTeal6")
 
 # Generate bold label + input field in one row
 def label_input(label: str, key: str, size=(40, 1)) -> list:
-    """Helper to generate a standard bold label + input field row."""
     return [[sg.Text(label, font=("Helvetica", 10, "bold"))], [sg.Input(key=key, size=size)]]
 
 # Define the window's contents

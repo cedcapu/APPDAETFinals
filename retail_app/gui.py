@@ -50,6 +50,9 @@ def build_window() -> sg.Window:
 
     return sg.Window(WINDOW_TITLE, layout, margins=(25, 25), element_justification="left")
 
+from .error_handling import validate_name, validate_contact_number, validate_address
+
+
 # Display and interact with the Window using an Event Loop
 def run() -> None:
     window = build_window()
@@ -61,6 +64,13 @@ def run() -> None:
                 break
 
             if event == KEY_OK:
+                # Validate inputs
+                if not validate_name(values[KEY_NAME]):
+                    continue  # loop back in the event of error
+                if not validate_contact_number(values[KEY_PHONE]):
+                    continue  # loop back in the event of error
+                if not validate_address(values[KEY_ADDRESS]):
+                    continue  # loop back in the event of error
                 # Compile form data
                 order_details = (
                     f"Timestamp: {datetime.now()}\n"

@@ -1,6 +1,3 @@
-# For constants used across the app
-from pathlib import Path
-
 # Config window
 WINDOW_TITLE = "Electronic Retailing System"
 

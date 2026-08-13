@@ -2,24 +2,21 @@ import PySimpleGUI as sg
 from datetime import datetime
 
 from .config import (
-    KEY_ADDRESS,
-    KEY_NAME,
-    KEY_NOTES,
-    KEY_OK,
-    KEY_ORDER,
-    KEY_PAYMENT,
-    KEY_PHONE,
-    KEY_QUIT,
-    KEY_STATUS,
-    PAYMENT_METHODS,
-    WINDOW_TITLE,
+    KEY_ADDRESS, KEY_NAME, KEY_NOTES, KEY_OK, KEY_ORDER,
+    KEY_PAYMENT, KEY_PHONE, KEY_QUIT, KEY_STATUS,
+    PAYMENT_METHODS, WINDOW_TITLE
 )
 from .file_manager import save_order
 from .products import get_product_display_list
 
 sg.theme("DarkTeal6")
 
-# Define the window's contents (MOVED FROM MAIN - Kellie <-- Delete later)
+# Generate bold label + input field in one row
+def label_input(label: str, key: str, size=(40, 1)) -> list:
+    """Helper to generate a standard bold label + input field row."""
+    return [[sg.Text(label, font=("Helvetica", 10, "bold"))], [sg.Input(key=key, size=size)]]
+
+# Define the window's contents
 def build_window() -> sg.Window:
     product_options = get_product_display_list()
 
@@ -29,36 +26,16 @@ def build_window() -> sg.Window:
 
         # Prompt product selection
         [sg.Text("Select a Product:", font=("Helvetica", 10, "bold"))],
-        [
-            sg.Combo(
-                product_options,
-                default_value=product_options[0], # Pre-select first item
-                key=KEY_ORDER,
-                readonly=True,
-                size=(35, 1),
-            )
-        ],
+        [sg.Combo(products, default_value=products[0], key=KEY_ORDER, readonly=True, size=(35, 1))],
 
         # Ask for customer info
-        [sg.Text("Full Name:", font=("Helvetica", 10, "bold"))],
-        [sg.Input(key=KEY_NAME, size=(40, 1))],
-
-        [sg.Text("Phone Number:", font=("Helvetica", 10, "bold"))],
-        [sg.Input(key=KEY_PHONE, size=(40, 1))],
-
-        [sg.Text("Delivery Address:", font=("Helvetica", 10, "bold"))],
-        [sg.Input(key=KEY_ADDRESS, size=(40, 1))],
+        *label_input("Full Name:", KEY_NAME),
+        *label_input("Phone Number:", KEY_PHONE),
+        *label_input("Delivery Address:", KEY_ADDRESS),
 
         # Ask for payment method
         [sg.Text("Mode of Payment:", font=("Helvetica", 10, "bold"))],
-        [
-            sg.Combo(
-                PAYMENT_METHODS,
-                default_value=PAYMENT_METHODS[0],
-                key=KEY_PAYMENT,
-                readonly=True,
-                size=(38, 1))
-        ],
+        [sg.Combo(PAYMENT_METHODS, default_value=PAYMENT_METHODS[0], key=KEY_PAYMENT, readonly=True, size=(38, 1))],
 
         # Ask for optional delivery notes
         [sg.Text("Delivery Notes (Optional):", font=("Helvetica", 10, "bold"))],
@@ -72,12 +49,7 @@ def build_window() -> sg.Window:
         ],
     ]
 
-    return sg.Window(
-        WINDOW_TITLE,
-        layout,
-        margins=(25, 25),
-        element_justification="left",
-    )
+    return sg.Window(WINDOW_TITLE, layout, margins=(25, 25), element_justification="left")
 
 # Display and interact with the Window using an Event Loop
 def run() -> None:

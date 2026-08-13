@@ -1,5 +1,4 @@
 PRODUCTS = [
-    # Products may be subject to change, sample lang to
     {"id": "P101", "name": "Wireless Ergonomic Mouse", "price": 19.99},
     {"id": "P102", "name": "Mechanical Keyboard Yellow Switches", "price": 59.99},
     {"id": "P103", "name": "27-inch OLED Monitor", "price": 189.99},

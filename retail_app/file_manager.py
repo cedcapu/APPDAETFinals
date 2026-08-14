@@ -10,6 +10,3 @@ def save_order(file_title: str, file_content: str) -> None:
             file.write(file_content)
 
     print(f"Order successfully saved to {file_title}.txt.")
-
-def clean_filename():
-    return
